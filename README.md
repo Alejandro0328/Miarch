@@ -8,7 +8,7 @@ Configuración personal de **Hyprland** en Arch Linux con instalación automatiz
 
 ```bash
 git clone https://github.com/Alejandro0328/Miarch.git
-cd ~/dotfiles
+cd Miarch
 chmod +x packages.sh install.sh
 ./packages.sh
 ./install.sh
