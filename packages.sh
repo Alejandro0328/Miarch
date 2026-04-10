@@ -1,49 +1,78 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "🚀 Inicio de instalación"
-# Verificar sistema
-if ! grep -q "Arch" /etc/os-release; then
-    echo "❌ Este script es solo para Arch Linux"
-    exit 1
-fi
-echo "🔄 Actualizando sistema..."
+echo "🚀 Iniciando instalación de paquetes para Miarch (Hyprland)..."
+
+# =========================
+# ACTUALIZAR SISTEMA
+# =========================
+echo "📦 Actualizando sistema..."
 sudo pacman -Syu --noconfirm
-echo "📦 Instalando paquetes base..."
 
-sudo pacman -S --noconfirm \
-    neovim \
-    zsh \
-    kitty \
+# =========================
+# INSTALAR PAQUETES OFICIALES (pacman)
+# =========================
+echo "📥 Instalando paquetes oficiales..."
+
+sudo pacman -S --noconfirm --needed \
+    hyprland \
     waybar \
-    rofi \
+    rofi-wayland \
     dunst \
+    kitty \
+    zsh \
+    neovim \
     git \
+    curl \
     base-devel \
+    python-pywal \
     grim \
-    slurp
-# Instalar yay si no existe
-if ! command -v yay &>/dev/null; then
-    echo "📦 Instalando yay..."
+    slurp \
+    swww \
+    xdg-desktop-portal-hyprland \
+    mesa \
+    ttf-jetbrains-mono-nerd \
+    ttf-font-awesome \
+    network-manager-applet \
+    brightnessctl \
+    pavucontrol \
+    playerctl
 
+# =========================
+# INSTALAR AUR HELPER (yay) si no existe
+# =========================
+if ! command -v yay &> /dev/null; then
+    echo "🔧 Instalando yay (AUR helper)..."
     git clone https://aur.archlinux.org/yay.git /tmp/yay
     cd /tmp/yay
     makepkg -si --noconfirm
-    cd ~
+    cd -
+    rm -rf /tmp/yay
 fi
-echo "📦 Instalando paquetes AUR..."
 
-yay -S --noconfirm \
+# =========================
+# INSTALAR PAQUETES AUR
+# =========================
+echo "📥 Instalando paquetes AUR..."
+yay -S --noconfirm --needed \
     google-chrome \
-    python-pywal
-# Instalar swww
-if ! command -v swww &>/dev/null; then
-    echo "🖼️ Instalando swww..."
+    # Aquí puedes agregar más paquetes AUR en el futuro
 
-    git clone https://aur.archlinux.org/swww.git /tmp/swww
+# =========================
+# INSTALACIÓN MANUAL DE SWWW (por si acaso)
+# =========================
+if ! command -v swww &> /dev/null; then
+    echo "🔧 Instalando swww desde fuente..."
+    git clone https://github.com/LGFae/swww.git /tmp/swww
     cd /tmp/swww
-    makepkg -si --noconfirm
-    cd ~
+    cargo install --path . --locked
+    cd -
+    rm -rf /tmp/swww
 fi
-echo "✅ Instalación completa"
+
+# =========================
+# FINAL
+# =========================
+echo "✅ ¡Instalación de paquetes completada!"
+echo "   Ahora ejecuta: bash install.sh"
 
