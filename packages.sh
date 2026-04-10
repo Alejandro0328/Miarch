@@ -48,6 +48,7 @@ for plugin in "${plugins[@]}"; do
 done
 
 sudo pacman -S --noconfirm --needed \
+    fastfetch\
     hyprland \
     waybar \
     rofi-wayland \
