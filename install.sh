@@ -4,17 +4,20 @@ set -euo pipefail
 echo "🚀 Aplicando dotfiles..."
 
 # =========================
-# VARIABLES
+# VARIABLES (ROBUSTAS)
 # =========================
-DOTFILES_DIR="$HOME/Miarch"
+# Detecta automáticamente dónde está el repo, sin importar el nombre ni la ubicación
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="$DOTFILES_DIR/config"
+
+echo "📍 Dotfiles encontrados en: $DOTFILES_DIR"
 
 # =========================
 # BACKUP
 # =========================
 backup() {
     if [ -e "$1" ] && [ ! -L "$1" ]; then
-        echo "📦 Backup de $1"
+        echo "📦 Backup de $1 → $1.bak"
         mv "$1" "$1.bak"
     fi
 }
@@ -28,7 +31,7 @@ link_config() {
 
     backup "$dest"
 
-    echo "🔗 $dest -> $src"
+    echo "🔗 $dest → $src"
     ln -sf "$src" "$dest"
 }
 
@@ -38,13 +41,13 @@ link_config() {
 mkdir -p "$HOME/.config"
 
 # =========================
-# CONFIGS
+# CONFIGS (solo las que realmente tienes)
 # =========================
-link_config "$CONFIG_DIR/hypr" "$HOME/.config/hypr"
+link_config "$CONFIG_DIR/hypr"  "$HOME/.config/hypr"
 link_config "$CONFIG_DIR/kitty" "$HOME/.config/kitty"
-link_config "$CONFIG_DIR/nvim" "$HOME/.config/nvim"
+link_config "$CONFIG_DIR/nvim"  "$HOME/.config/nvim"
 
-# swww (opcional)
+# swww (opcional - solo si la carpeta existe)
 if [ -d "$CONFIG_DIR/swww" ]; then
     link_config "$CONFIG_DIR/swww" "$HOME/.config/swww"
 fi
@@ -54,7 +57,7 @@ fi
 # =========================
 if [ -f "$DOTFILES_DIR/home/.zshrc" ]; then
     backup "$HOME/.zshrc"
-    echo "🔗 ~/.zshrc -> $DOTFILES_DIR/home/.zshrc"
+    echo "🔗 ~/.zshrc → $DOTFILES_DIR/home/.zshrc"
     ln -sf "$DOTFILES_DIR/home/.zshrc" "$HOME/.zshrc"
 fi
 
