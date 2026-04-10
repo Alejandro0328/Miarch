@@ -62,14 +62,30 @@ yay -S --noconfirm --needed \
 # INSTALACIÓN MANUAL DE SWWW (por si acaso)
 # =========================
 if ! command -v swww &> /dev/null; then
-    echo "🔧 Instalando swww desde fuente..."
+    echo "🖼️ Instalando swww desde fuente..."
+    
+    # 1. Limpieza total del entorno de compilación
+    rm -rf /tmp/swww
+    
+    # 2. Clonar el repositorio oficial
     git clone https://github.com/LGFae/swww.git /tmp/swww
     cd /tmp/swww
+
+    # 3. Instalación profesional con Cargo
+    # --path .  -> Instala el proyecto actual
+    # --locked  -> Usa las versiones exactas de librerías del proyecto
     cargo install --path . --locked
+
+    # 4. Mover binarios a una ruta del sistema (Cargo suele dejarlos en ~/.cargo/bin)
+    # Esto asegura que cualquier usuario o script los encuentre
+    sudo cp ~/.cargo/bin/swww /usr/local/bin/
+    sudo cp ~/.cargo/bin/swww-daemon /usr/local/bin/
+
+    # 5. Limpieza post-instalación
     cd -
     rm -rf /tmp/swww
+    echo "✅ swww instalado correctamente."
 fi
-
 # =========================
 # FINAL
 # =========================
