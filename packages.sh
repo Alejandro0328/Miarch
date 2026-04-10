@@ -61,13 +61,26 @@ yay -S --noconfirm --needed \
 # =========================
 # INSTALACIÓN MANUAL DE SWWW (por si acaso)
 # =========================
+# =========================
+# INSTALACIÓN MANUAL DE SWWW
+# =========================
+# Limpiamos cualquier rastro previo
 rm -rf /tmp/swww
-git clone [https://github.com/LGFae/swww.git](https://github.com/LGFae/swww.git) /tmp/swww
+
+# Clonamos usando la URL pura (sin corchetes ni paréntesis)
+git clone https://github.com/LGFae/swww.git /tmp/swww
+
+# Entramos, compilamos e instalamos
 cd /tmp/swww
 cargo build --release
+
+# Movilizamos los binarios a la ruta del sistema
 sudo cp target/release/swww /usr/local/bin/
 sudo cp target/release/swww-daemon /usr/local/bin/
-fi
+
+# Volvemos al directorio anterior y limpiamos
+cd -
+rm -rf /tmp/swww
 # =========================
 # FINAL
 # =========================
