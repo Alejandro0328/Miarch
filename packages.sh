@@ -13,6 +13,20 @@ sudo pacman -Syu --noconfirm
 # INSTALAR PAQUETES OFICIALES (pacman)
 # =========================
 echo "📥 Instalando paquetes oficiales..."
+# Instalación de Zsh y Oh My Zsh
+if ! command -v zsh &> /dev/null; then
+    echo "🐚 Instalando Zsh..."
+    sudo pacman -S --noconfirm zsh
+fi
+
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo "🪄 Instalando Oh My Zsh..."
+    # Usamos el instalador desatendido para que no interrumpa el script
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    
+    # Cambiar el shell por defecto a zsh
+    sudo chsh -s $(which zsh) $USER
+fi
 
 sudo pacman -S --noconfirm --needed \
     hyprland \
@@ -20,7 +34,6 @@ sudo pacman -S --noconfirm --needed \
     rofi-wayland \
     dunst \
     kitty \
-    zsh \
     neovim \
     git \
     curl \
