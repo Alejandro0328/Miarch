@@ -10,7 +10,7 @@ Configuración personal de **Hyprland** optimizada para hardware Intel (HP Elite
 Si acabas de instalar Arch Linux (mínimo), ejecuta este comando único para preparar el sistema y desplegar todo el entorno automáticamente:
 
 ```bash
-sudo pacman -S --noconfirm git base-devel && git clone https://github.com/Alejandro0328/Miarch.git ~/Miarch && cd ~/Miarch && chmod +x packages.sh install.sh && ./packages.sh && ./install.sh
+sudo pacman -S --noconfirm git base-devel rust && git clone https://github.com/Alejandro0328/Miarch.git ~/Miarch && cd ~/Miarch && chmod +x packages.sh install.sh && ./packages.sh && ./install.sh
 ````
 
 -----
@@ -40,8 +40,7 @@ Este repositorio automatiza la transición a un entorno de escritorio completo:
 Si deseas limpiar el sistema para realizar una instalación desde cero nuevamente, utiliza este comando:
 
 ```bash
-# Tu comando original mejorado:
-cd ~ && rm -rf ~/Miarch ~/.config/hypr ~/.config/kitty ~/.config/waybar ~/.cache/swww ~/.cache/wal /tmp/swww
+cd ~ && rm -rf ~/Miarch ~/.config/hypr ~/.config/kitty ~/.config/waybar ~/.config/swww ~/.config/neovim ~/.config/zsh ~/.cache/swww ~/.cache/wal /tmp/swww && sudo pacman -Rs --noconfirm rust
 ```
 
 -----
