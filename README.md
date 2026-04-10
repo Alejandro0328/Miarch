@@ -10,7 +10,7 @@ Configuración personal de **Hyprland** en Arch Linux con un sistema de instalac
 Si acabas de instalar Arch Linux, ejecuta este comando para desplegar todo tu entorno automáticamente:
 
 ```bash
-git clone [https://github.com/Alejandro0328/Miarch.git](https://github.com/Alejandro0328/Miarch.git) ~/Miarch && cd ~/Miarch && chmod +x packages.sh install.sh && ./packages.sh && ./install.sh
+sudo pacman -S --noconfirm git base-devel && git clone https://github.com/Alejandro0328/Miarch.git ~/Miarch && cd ~/Miarch && chmod +x packages.sh install.sh && ./packages.sh && ./install.sh
 ```
 
 ---
