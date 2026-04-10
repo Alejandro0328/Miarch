@@ -1,157 +1,90 @@
+
 # 🧰 Dotfiles Hyprland - Setup Arch Linux
 
-Configuración personal de **Hyprland** en Arch Linux con instalación automatizada.
+Configuración personal de **Hyprland** en Arch Linux con un sistema de instalación automatizado diseñado para eficiencia y coherencia.
 
 ---
 
-## 🚀 Instalación rápida
+## 🚀 Instalación (una sola línea)
+
+Si acabas de instalar Arch Linux, ejecuta este comando para desplegar todo tu entorno automáticamente:
 
 ```bash
-git clone https://github.com/Alejandro0328/Miarch.git
-cd Miarch
-chmod +x packages.sh install.sh
-./packages.sh
-./install.sh
+git clone [https://github.com/Alejandro0328/Miarch.git](https://github.com/Alejandro0328/Miarch.git) ~/Miarch && cd ~/Miarch && chmod +x packages.sh install.sh && ./packages.sh && ./install.sh
 ```
 
 ---
 
 ## 🧠 ¿Qué hace este repositorio?
 
-Este setup automatiza completamente:
+Este setup transforma una instalación base de Arch en un entorno de trabajo completo:
 
-* Instalación de paquetes base
-* Instalación de AUR (yay, google-chrome, pywal)
-* Configuración de:
-
-  * Hyprland
-  * Kitty
-  * Neovim
-  * Zsh
-* Aplicación de wallpapers con `swww`
-* Gestión de scripts personalizados
+* **Instalación de paquetes base:** Herramientas esenciales de sistema y multimedia.
+* **Gestión de AUR:** Configuración automática de `yay`, Google Chrome y Pywal.
+* **Sincronización de configuraciones:**
+  * **Hyprland:** El cerebro del entorno (compositor).
+  * **Kitty:** Terminal configurada con soporte para colores dinámicos.
+  * **Neovim:** Editor de texto optimizado (`init.vim`).
+  * **Zsh:** Shell personalizada con integración de `pywal`.
+* **Personalización Visual:** Gestión de wallpapers y animaciones con `swww`.
 
 ---
 
-## 📦 Requisitos
+## 📦 Contenido del Sistema
 
-* Instalación mínima de Arch Linux
-* Conexión a internet
-* Usuario con permisos sudo
+### 🔹 Core & Multimedia
+* **Terminal:** Kitty
+* **Editor:** Neovim
+* **Barra/Notificaciones:** Waybar, Dunst
+* **Lanzador:** Rofi
+* **Capturas:** Grim + Slurp (con soporte de área)
 
----
-
-## ⚙️ Scripts
-
-### 🔹 packages.sh
-
-Instala todo el entorno:
-
-* Pacman packages:
-
-  * neovim
-  * zsh
-  * kitty
-  * waybar
-  * rofi
-  * dunst
-  * git
-  * base-devel
-  * grim
-  * slurp
-
-* AUR:
-
-  * yay
-  * google-chrome
-  * python-pywal
-  * swww
+### 🔹 Automatización de Scripts
+1. **`packages.sh`**: Maneja la instalación de paquetes desde los repositorios oficiales y AUR. Compila `swww` desde el código fuente para asegurar todas las transiciones.
+2. **`install.sh`**: Distribuye tus archivos de configuración (`.config`, `.zshrc`) y prepara los scripts de usuario.
 
 ---
 
-### 🔹 install.sh
+## 🖼️ Estructura de Archivos
 
-Aplica la configuración:
+El sistema se organiza bajo el siguiente árbol de directorios:
 
-* Crea symlinks en `~/.config`
-* Hace backup de archivos existentes
-* Aplica `.zshrc`
-* Da permisos a scripts
-* Ejecuta wallpaper automáticamente
-
----
-
-## 🖼️ Wallpapers
-
-Ubicados en:
-
-```bash
-~/dotfiles/wallpapers/
-```
-
-Script:
-
-```bash
-~/dotfiles/scripts/wallpaper.sh
-```
-
-Puedes cambiar el fondo editando ese archivo.
-
----
-
-## 🧪 Testing
-
-Ejecutar manualmente:
-
-```bash
-bash ~/dotfiles/scripts/wallpaper.sh
-```
-
-Verificar symlinks:
-
-```bash
-ls -l ~/.config
+```text
+~/Miarch/
+├── config/           # Archivos de configuración (Hyprland, Kitty, Nvim, etc.)
+├── home/             # Configuraciones del usuario (.zshrc)
+├── scripts/          # Scripts personalizados (wallpaper.sh)
+├── wallpapers/       # Galería de fondos personales
+├── packages.sh       # Instalador de software
+└── install.sh        # Instalador de configuraciones
 ```
 
 ---
 
-## 🔧 Personalización
+## 🎨 Personalización y Colores
 
-Edita:
+El sistema utiliza **Pywal** para generar esquemas de colores basados en el wallpaper actual. Para cambiar el fondo y los colores de la terminal simultáneamente, usa el script incluido:
 
 ```bash
-config/
-home/.zshrc
-scripts/
-wallpapers/
+bash ~/.config/hypr/scripts/wallpaper.sh
 ```
 
 ---
 
-## ⚠️ Notas
-
-* Este setup está pensado para uso personal
-* Puede requerir ajustes según hardware
-* Se recomienda revisar scripts antes de ejecutar
+## 🔧 Notas de Hardware
+* Optimizado para **HP EliteBook** (Gráficos Intel i5 8th Gen).
+* Utiliza el formato `xrgb` en el daemon de `swww` para asegurar estabilidad en drivers Intel.
 
 ---
 
-## 🧠 Filosofía
-
-* Simplicidad
-* Reproducibilidad
-* Control total del sistema
-
----
-
-## 📌 Uso en nueva instalación
-
-```bash
-cd ~/Miarch && chmod +x packages.sh install.sh && ./packages.sh && ./install.sh
-```
+## ⚠️ Requisitos
+* Instalación base de Arch Linux.
+* Usuario con privilegios de **sudo**.
+* Conexión a internet activa.
 
 ---
 
 ## 🔥 Autor
 
-Configuración personalizada para flujo de trabajo en Hyprland + Arch Linux
+**Miguel Alejandro** *Arquitecto de soluciones en desarrollo.*
+
