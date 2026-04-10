@@ -51,7 +51,20 @@ link_config "$CONFIG_DIR/nvim"  "$HOME/.config/nvim"
 if [ -d "$CONFIG_DIR/swww" ]; then
     link_config "$CONFIG_DIR/swww" "$HOME/.config/swww"
 fi
+echo "💤 Instalando y activando plugins de Neovim..."
 
+# 1. Asegurar que la configuración se mueva a su lugar antes de borrar Miarch
+mkdir -p ~/.config/nvim
+cp -r ~/Miarch/dotfiles/nvim/* ~/.config/nvim/
+
+# 2. Instalar el gestor de plugins (Lazy.nvim) si no está
+if [ ! -d "$HOME/.local/share/nvim/lazy/lazy.nvim" ]; then
+  git clone --filter=blob:none https://github.com/folke/lazy.nvim.git --branch=stable "$HOME/.local/share/nvim/lazy/lazy.nvim"
+fi
+
+# 3. COMANDO CLAVE: Forzar la instalación de plugins sin abrir la interfaz
+# Esto hace que nvim instale todo y se cierre solo al terminar
+nvim --headless "+Lazy! sync" +qa
 # =========================
 # ZSH
 # =========================
@@ -60,7 +73,6 @@ if [ -f "$DOTFILES_DIR/home/.zshrc" ]; then
     echo "🔗 ~/.zshrc → $DOTFILES_DIR/home/.zshrc"
     ln -sf "$DOTFILES_DIR/home/.zshrc" "$HOME/.zshrc"
 fi
-
 # =========================
 # SCRIPTS
 # =========================
@@ -81,3 +93,23 @@ fi
 # FINAL
 # =========================
 echo "✅ Dotfiles aplicados correctamente"
+# =========================
+# MUDANZA Y LIMPIEZA FINAL
+# =========================
+echo "🚚 Organizando archivos en sus destinos definitivos..."
+
+# 1. Crear estructura estándar y carpeta de Wallpapers
+xdg-user-dirs-update
+mkdir -p ~/Pictures/Wallpapers
+mkdir -p ~/.local/bin
+
+# 2. Mover Wallpapers y el Script
+cp -r ~/Miarch/wallpapers/* ~/Pictures/Wallpapers/
+cp ~/Miarch/scripts/wallpaper.sh ~/.local/bin/wallpaper.sh
+chmod +x ~/.local/bin/wallpaper.sh
+
+# 3. ELIMINAR EL REPOSITORIO (Limpieza de obra)
+echo "🧹 Borrando carpeta de instalación Miarch..."
+rm -rf ~/Miarch
+
+echo "✅ Sistema autónomo y limpio."
