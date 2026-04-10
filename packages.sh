@@ -27,6 +27,25 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
     # Cambiar el shell por defecto a zsh
     sudo chsh -s $(which zsh) $USER
 fi
+echo "🔌 Asegurando repositorios de plugins Zsh..."
+ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
+
+# Lista de plugins a clonar
+plugins=(
+    "zsh-autosuggestions"
+    "zsh-syntax-highlighting"
+    "zsh-history-substring-search"
+)
+
+# Bucle para clonar cada uno si no está presente
+for plugin in "${plugins[@]}"; do
+    if [ ! -d "$ZSH_CUSTOM/plugins/$plugin" ]; then
+        echo "📥 Clonando $plugin..."
+        git clone https://github.com/zsh-users/$plugin ${ZSH_CUSTOM}/plugins/$plugin
+    else
+        echo "✅ $plugin ya está instalado."
+    fi
+done
 
 sudo pacman -S --noconfirm --needed \
     hyprland \
