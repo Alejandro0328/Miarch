@@ -38,11 +38,11 @@ copy_config() {
 # =========================
 # PREPARACIÓN DEL SISTEMA
 # =========================
-echo "📁 Preparando directorios..."
+echo "📁 Preparando directorios del usuario..."
+xdg-user-dirs-update          # Crea Pictures, Documents, etc. de forma estándar
 mkdir -p "$HOME/.config"
 mkdir -p "$HOME/.local/bin"
-mkdir -p "$HOME/Pictures/Wallpapers"
-xdg-user-dirs-update
+mkdir -p "$HOME/Pictures/Wallpapers"   # Subcarpeta específica para tus wallpapers
 
 # =========================
 # COPIAR CONFIGURACIONES
