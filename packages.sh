@@ -8,7 +8,7 @@ echo "🚀 Iniciando instalación de paquetes para Miarch (Hyprland)..."
 # =========================
 echo "📦 Actualizando sistema..."
 sudo pacman -Syu --noconfirm
-
+sudo pacman -S --noconfirm xdg-user-dirs
 # =========================
 # INSTALAR PAQUETES OFICIALES (pacman)
 # =========================
