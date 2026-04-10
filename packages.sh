@@ -85,7 +85,8 @@ fi
 # =========================
 echo "📥 Instalando paquetes desde AUR..."
 yay -S --noconfirm --needed \
-    google-chrome || echo "⚠️  google-chrome no se pudo instalar (puedes instalarlo manualmente después)"
+    google-chrome \
+    visual-studio-code-bin
 
 # =========================
 # INSTALACIÓN MANUAL DE SWWW (compilación limpia)
