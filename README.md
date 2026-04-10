@@ -147,13 +147,11 @@ wallpapers/
 ## 📌 Uso en nueva instalación
 
 ```bash
-git clone https://github.com/TU_USUARIO/dotfiles.git
-cd dotfiles
-./packages.sh && ./install.sh
+cd ~/Miarch && chmod +x packages.sh install.sh && ./packages.sh && ./install.sh
 ```
 
 ---
 
 ## 🔥 Autor
 
-Configuración personalizada para flujo de trabajo en Hyprland + Arch Linux.
+Configuración personalizada para flujo de trabajo en Hyprland + Arch Linux
