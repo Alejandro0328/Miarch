@@ -121,11 +121,24 @@ else
 fi
 
 # =========================
-# LIMPIEZA FINAL - BORRAR REPO
+# AUTOSTART HYPRLAND
+# =========================
+echo "⚙️  Configurando inicio automático de Hyprland al login en tty1..."
+cat > "$HOME/.zprofile" << 'EOF'
+# Miarch - Inicio automático de Hyprland (solo en tty1)
+if [[ "$(tty)" == "/dev/tty1" ]]; then
+    exec Hyprland
+fi
+EOF
+
+# =========================
+# LIMPIEZA FINAL
 # =========================
 echo "🧹 Limpiando archivos de instalación..."
 rm -rf "$DOTFILES_DIR"
 
 echo "✅ ¡Instalación completada con éxito!"
-echo "   El sistema ahora es autónomo."
-echo "   Reinicia tu sesión para aplicar todos los cambios."
+echo "   Ahora al hacer reboot e iniciar sesión,"
+echo "   Hyprland se abrirá automáticamente."
+echo ""
+echo "   Reinicia con: reboot"
