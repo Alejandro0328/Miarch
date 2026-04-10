@@ -1,115 +1,131 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "🚀 Aplicando dotfiles..."
+echo "🚀 Iniciando instalación de dotfiles Miarch..."
 
 # =========================
-# VARIABLES (ROBUSTAS)
+# DETECTAR UBICACIÓN DEL REPO
 # =========================
-# Detecta automáticamente dónde está el repo, sin importar el nombre ni la ubicación
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="$DOTFILES_DIR/config"
 
 echo "📍 Dotfiles encontrados en: $DOTFILES_DIR"
 
 # =========================
-# BACKUP
+# FUNCIONES AUXILIARES
 # =========================
 backup() {
     if [ -e "$1" ] && [ ! -L "$1" ]; then
-        echo "📦 Backup de $1 → $1.bak"
+        echo "📦 Creando backup: $1 → $1.bak"
         mv "$1" "$1.bak"
     fi
 }
 
-# =========================
-# SYMLINK
-# =========================
-link_config() {
+copy_config() {
     local src="$1"
     local dest="$2"
 
-    backup "$dest"
-
-    echo "🔗 $dest → $src"
-    ln -sf "$src" "$dest"
+    if [ -d "$src" ]; then
+        backup "$dest"
+        echo "📋 Copiando configuración: $src → $dest"
+        mkdir -p "$(dirname "$dest")"
+        cp -r "$src" "$dest"
+    else
+        echo "⚠️  Advertencia: $src no existe, saltando..."
+    fi
 }
 
 # =========================
-# CREAR ~/.config
+# PREPARACIÓN DEL SISTEMA
 # =========================
+echo "📁 Preparando directorios..."
 mkdir -p "$HOME/.config"
+mkdir -p "$HOME/.local/bin"
+mkdir -p "$HOME/Pictures/Wallpapers"
+xdg-user-dirs-update
 
 # =========================
-# CONFIGS (solo las que realmente tienes)
+# COPIAR CONFIGURACIONES
 # =========================
-link_config "$CONFIG_DIR/hypr"  "$HOME/.config/hypr"
-link_config "$CONFIG_DIR/kitty" "$HOME/.config/kitty"
-link_config "$CONFIG_DIR/nvim"  "$HOME/.config/nvim"
+echo "🔧 Aplicando configuraciones..."
 
-# swww (opcional - solo si la carpeta existe)
+copy_config "$CONFIG_DIR/hypr"  "$HOME/.config/hypr"
+copy_config "$CONFIG_DIR/kitty" "$HOME/.config/kitty"
+copy_config "$CONFIG_DIR/nvim"  "$HOME/.config/nvim"
+
+# swww (opcional)
 if [ -d "$CONFIG_DIR/swww" ]; then
-    link_config "$CONFIG_DIR/swww" "$HOME/.config/swww"
-fi
-echo "💤 Instalando y activando plugins de Neovim..."
-
-# 1. Asegurar que la configuración se mueva a su lugar antes de borrar Miarch
-mkdir -p ~/.config/nvim
-cp -r ~/Miarch/dotfiles/nvim/* ~/.config/nvim/
-
-# 2. Instalar el gestor de plugins (Lazy.nvim) si no está
-if [ ! -d "$HOME/.local/share/nvim/lazy/lazy.nvim" ]; then
-  git clone --filter=blob:none https://github.com/folke/lazy.nvim.git --branch=stable "$HOME/.local/share/nvim/lazy/lazy.nvim"
+    copy_config "$CONFIG_DIR/swww" "$HOME/.config/swww"
 fi
 
-# 3. COMANDO CLAVE: Forzar la instalación de plugins sin abrir la interfaz
-# Esto hace que nvim instale todo y se cierre solo al terminar
-nvim --headless "+Lazy! sync" +qa
 # =========================
-# ZSH
+# COPIAR ZSH
 # =========================
 if [ -f "$DOTFILES_DIR/home/.zshrc" ]; then
     backup "$HOME/.zshrc"
-    echo "🔗 ~/.zshrc → $DOTFILES_DIR/home/.zshrc"
-    ln -sf "$DOTFILES_DIR/home/.zshrc" "$HOME/.zshrc"
+    echo "🔗 Copiando ~/.zshrc"
+    cp "$DOTFILES_DIR/home/.zshrc" "$HOME/.zshrc"
 fi
+
 # =========================
-# SCRIPTS
+# NEOVIM - Instalar plugins con Lazy.nvim
+# =========================
+echo "💤 Instalando plugins de Neovim..."
+if [ -d "$HOME/.config/nvim" ]; then
+    # Instalar Lazy.nvim si no existe
+    if [ ! -d "$HOME/.local/share/nvim/lazy/lazy.nvim" ]; then
+        echo "📥 Clonando Lazy.nvim..."
+        git clone --filter=blob:none https://github.com/folke/lazy.nvim.git \
+            --branch=stable "$HOME/.local/share/nvim/lazy/lazy.nvim"
+    fi
+
+    # Instalar plugins en modo headless
+    echo "🔄 Sincronizando plugins de Neovim..."
+    nvim --headless "+Lazy! sync" +qa || echo "⚠️  Neovim terminó con errores (posiblemente normal en primer arranque)"
+else
+    echo "⚠️  Carpeta de nvim no encontrada, saltando instalación de plugins"
+fi
+
+# =========================
+# COPIAR WALLPAPERS
+# =========================
+if [ -d "$DOTFILES_DIR/wallpapers" ]; then
+    echo "🖼️  Copiando wallpapers a ~/Pictures/Wallpapers/"
+    cp -r "$DOTFILES_DIR/wallpapers/"* "$HOME/Pictures/Wallpapers/" 2>/dev/null || true
+fi
+
+# =========================
+# COPIAR SCRIPT DE WALLPAPER
+# =========================
+if [ -f "$DOTFILES_DIR/scripts/wallpaper.sh" ]; then
+    echo "⚙️  Instalando script de wallpaper en ~/.local/bin/"
+    cp "$DOTFILES_DIR/scripts/wallpaper.sh" "$HOME/.local/bin/wallpaper.sh"
+    chmod +x "$HOME/.local/bin/wallpaper.sh"
+fi
+
+# =========================
+# PERMISOS DE SCRIPTS
 # =========================
 if [ -d "$DOTFILES_DIR/scripts" ]; then
-    echo "⚙️ Aplicando permisos a scripts..."
     chmod +x "$DOTFILES_DIR/scripts/"* 2>/dev/null || true
 fi
 
 # =========================
-# WALLPAPER
+# APLICAR WALLPAPER
 # =========================
-if [ -f "$DOTFILES_DIR/scripts/wallpaper.sh" ]; then
-    echo "🖼️ Aplicando wallpaper..."
-    bash "$DOTFILES_DIR/scripts/wallpaper.sh" || echo "⚠️ Error aplicando wallpaper"
+echo "🖼️  Aplicando wallpaper inicial..."
+if [ -f "$HOME/.local/bin/wallpaper.sh" ]; then
+    "$HOME/.local/bin/wallpaper.sh" || echo "⚠️  Error al aplicar wallpaper"
+else
+    echo "⚠️  wallpaper.sh no encontrado"
 fi
 
 # =========================
-# FINAL
+# LIMPIEZA FINAL - BORRAR REPO
 # =========================
-echo "✅ Dotfiles aplicados correctamente"
-# =========================
-# MUDANZA Y LIMPIEZA FINAL
-# =========================
-echo "🚚 Organizando archivos en sus destinos definitivos..."
+echo "🧹 Limpiando archivos de instalación..."
+rm -rf "$DOTFILES_DIR"
 
-# 1. Crear estructura estándar y carpeta de Wallpapers
-xdg-user-dirs-update
-mkdir -p ~/Pictures/Wallpapers
-mkdir -p ~/.local/bin
-
-# 2. Mover Wallpapers y el Script
-cp -r ~/Miarch/wallpapers/* ~/Pictures/Wallpapers/
-cp ~/Miarch/scripts/wallpaper.sh ~/.local/bin/wallpaper.sh
-chmod +x ~/.local/bin/wallpaper.sh
-
-# 3. ELIMINAR EL REPOSITORIO (Limpieza de obra)
-echo "🧹 Borrando carpeta de instalación Miarch..."
-rm -rf ~/Miarch
-
-echo "✅ Sistema autónomo y limpio."
+echo "✅ ¡Instalación completada con éxito!"
+echo "   El sistema ahora es autónomo."
+echo "   Reinicia tu sesión para aplicar todos los cambios."
