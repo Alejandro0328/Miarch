@@ -10,7 +10,7 @@ Configuración personal de **Hyprland** optimizada para hardware Intel (HP Elite
 Si acabas de instalar Arch Linux (mínimo), ejecuta este comando único para preparar el sistema y desplegar todo el entorno automáticamente:
 
 ```bash
-sudo pacman -S --noconfirm git base-devel && git clone [https://github.com/Alejandro0328/Miarch.git](https://github.com/Alejandro0328/Miarch.git) ~/Miarch && cd ~/Miarch && chmod +x packages.sh install.sh && ./packages.sh && ./install.sh
+sudo pacman -S --noconfirm git base-devel && git clone https://github.com/Alejandro0328/Miarch.git ~/Miarch && cd ~/Miarch && chmod +x packages.sh install.sh && ./packages.sh && ./install.sh
 ````
 
 -----
