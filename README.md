@@ -40,7 +40,8 @@ Este repositorio automatiza la transición a un entorno de escritorio completo:
 Si deseas limpiar el sistema para realizar una instalación desde cero nuevamente, utiliza este comando:
 
 ```bash
-cd ~ && rm -rf ~/Miarch ~/.config/hypr ~/.config/kitty /tmp/swww ~/.cargo
+# Tu comando original mejorado:
+cd ~ && rm -rf ~/Miarch ~/.config/hypr ~/.config/kitty ~/.config/waybar ~/.cache/swww ~/.cache/wal /tmp/swww
 ```
 
 -----
