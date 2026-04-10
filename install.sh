@@ -6,7 +6,7 @@ echo "🚀 Aplicando dotfiles..."
 # =========================
 # VARIABLES
 # =========================
-DOTFILES_DIR="$HOME/dotfiles"
+DOTFILES_DIR="$HOME/Miarch"
 CONFIG_DIR="$DOTFILES_DIR/config"
 
 # =========================
