@@ -39,7 +39,8 @@ sudo pacman -S --noconfirm --needed \
     playerctl \
     xdg-user-dirs \
     fastfetch \
-    dolphin
+    dolphin \
+    eza
 
 # =========================
 # INSTALAR OH MY ZSH + PLUGINS
