@@ -1,90 +1,77 @@
 
 # 🧰 Dotfiles Hyprland - Setup Arch Linux
 
-Configuración personal de **Hyprland** en Arch Linux con un sistema de instalación automatizado diseñado para eficiencia y coherencia.
+Configuración personal de **Hyprland** optimizada para hardware Intel (HP EliteBook). Este repositorio automatiza el despliegue de un entorno de trabajo basado en Wayland, siguiendo principios de limpieza, escalabilidad y coherencia.
 
 ---
 
-## 🚀 Instalación (una sola línea)
+## 🚀 Instalación Full-Auto (Desde Arch Base)
 
-Si acabas de instalar Arch Linux, ejecuta este comando para desplegar todo tu entorno automáticamente:
+Si acabas de instalar Arch Linux (mínimo), ejecuta este comando único para preparar el sistema y desplegar todo el entorno automáticamente:
 
 ```bash
-sudo pacman -S --noconfirm git base-devel && git clone https://github.com/Alejandro0328/Miarch.git ~/Miarch && cd ~/Miarch && chmod +x packages.sh install.sh && ./packages.sh && ./install.sh
-```
+sudo pacman -S --noconfirm git base-devel && git clone [https://github.com/Alejandro0328/Miarch.git](https://github.com/Alejandro0328/Miarch.git) ~/Miarch && cd ~/Miarch && chmod +x packages.sh install.sh && ./packages.sh && ./install.sh
+````
 
----
+-----
 
-## 🧠 ¿Qué hace este repositorio?
+## 🧠 ¿Qué incluye este setup?
 
-Este setup transforma una instalación base de Arch en un entorno de trabajo completo:
+Este repositorio automatiza la transición a un entorno de escritorio completo:
 
-* **Instalación de paquetes base:** Herramientas esenciales de sistema y multimedia.
-* **Gestión de AUR:** Configuración automática de `yay`, Google Chrome y Pywal.
-* **Sincronización de configuraciones:**
-  * **Hyprland:** El cerebro del entorno (compositor).
-  * **Kitty:** Terminal configurada con soporte para colores dinámicos.
-  * **Neovim:** Editor de texto optimizado (`init.vim`).
-  * **Zsh:** Shell personalizada con integración de `pywal`.
-* **Personalización Visual:** Gestión de wallpapers y animaciones con `swww`.
+  * **Gestión de Paquetes:** Herramientas esenciales como `Kitty`, `Neovim`, `Waybar`, `Rofi` y `Dunst`.
+  * **Soporte AUR:** Configuración de `yay` para paquetes de la comunidad (Google Chrome, etc.).
+  * **Fondo de Pantalla:** Compilación e instalación de `swww` desde fuente para transiciones fluidas.
+  * **Estética Dinámica:** Integración de `Pywal` para generar paletas de colores basadas en tu wallpaper.
 
----
+-----
 
-## 📦 Contenido del Sistema
+## ⚙️ Estructura del Proyecto
 
-### 🔹 Core & Multimedia
-* **Terminal:** Kitty
-* **Editor:** Neovim
-* **Barra/Notificaciones:** Waybar, Dunst
-* **Lanzador:** Rofi
-* **Capturas:** Grim + Slurp (con soporte de área)
+  * **`packages.sh`**: El motor del sistema. Instala dependencias oficiales y compila herramientas desde fuente.
+  * **`install.sh`**: El arquitecto. Gestiona los enlaces simbólicos (symlinks) y la organización de carpetas en `~/.config`.
+  * **`config/`**: Configuraciones modulares para cada componente (Hyprland, Mako, Waybar).
+  * **`scripts/`**: Scripts de automatización para wallpapers y gestión de energía.
 
-### 🔹 Automatización de Scripts
-1. **`packages.sh`**: Maneja la instalación de paquetes desde los repositorios oficiales y AUR. Compila `swww` desde el código fuente para asegurar todas las transiciones.
-2. **`install.sh`**: Distribuye tus archivos de configuración (`.config`, `.zshrc`) y prepara los scripts de usuario.
+-----
 
----
+## 🔄 Reset de Instalación
 
-## 🖼️ Estructura de Archivos
-
-El sistema se organiza bajo el siguiente árbol de directorios:
-
-```text
-~/Miarch/
-├── config/           # Archivos de configuración (Hyprland, Kitty, Nvim, etc.)
-├── home/             # Configuraciones del usuario (.zshrc)
-├── scripts/          # Scripts personalizados (wallpaper.sh)
-├── wallpapers/       # Galería de fondos personales
-├── packages.sh       # Instalador de software
-└── install.sh        # Instalador de configuraciones
-```
-
----
-
-## 🎨 Personalización y Colores
-
-El sistema utiliza **Pywal** para generar esquemas de colores basados en el wallpaper actual. Para cambiar el fondo y los colores de la terminal simultáneamente, usa el script incluido:
+Si deseas limpiar el sistema para realizar una instalación desde cero nuevamente, utiliza este comando:
 
 ```bash
-bash ~/.config/hypr/scripts/wallpaper.sh
+cd ~ && rm -rf ~/Miarch ~/.config/hypr ~/.config/kitty /tmp/swww ~/.cargo
 ```
 
----
+-----
 
-## 🔧 Notas de Hardware
-* Optimizado para **HP EliteBook** (Gráficos Intel i5 8th Gen).
-* Utiliza el formato `xrgb` en el daemon de `swww` para asegurar estabilidad en drivers Intel.
+## 🖼️ Personalización Visual
 
----
+Para cambiar el fondo de pantalla y actualizar los colores del sistema instantáneamente:
 
-## ⚠️ Requisitos
-* Instalación base de Arch Linux.
-* Usuario con privilegios de **sudo**.
-* Conexión a internet activa.
+```bash
+bash ~/Miarch/scripts/wallpaper.sh
+```
 
----
+-----
 
-## 🔥 Autor
+## 📌 Requisitos
 
-**Miguel Alejandro** *Arquitecto de soluciones en desarrollo.*
+  * **Sistema:** Arch Linux (Instalación limpia).
+  * **Usuario:** Permisos de `sudo` configurados.
+  * **Hardware:** Probado en Intel Core i5 8th Gen.
 
+-----
+
+## 🔥 Filosofía
+
+Desarrollado bajo los valores de **Coherencia, Lealtad y Respeto**. El objetivo es crear una arquitectura de software donde cada archivo de configuración tenga un propósito claro.
+
+**Autor:** [Miguel Alejandro](https://www.google.com/search?q=https://github.com/Alejandro0328)
+
+```
+
+
+
+¡Cópialo, pégalo en tu `README.md` y dale ese `push` a GitHub! ¿Listo para la prueba de fuego en la otra PC?
+```
