@@ -40,7 +40,8 @@ sudo pacman -S --noconfirm --needed \
     xdg-user-dirs \
     fastfetch \
     dolphin \
-    eza
+    eza\
+    wl-clipboard 
 
 # =========================
 # INSTALAR OH MY ZSH + PLUGINS
