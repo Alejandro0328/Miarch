@@ -1,7 +1,7 @@
 
 # 🧰 Dotfiles Hyprland - Setup Arch Linux
 
-Configuración personal de **Hyprland** optimizada para hardware Intel (HP EliteBook). Este repositorio automatiza el despliegue de un entorno de trabajo basado en Wayland, siguiendo principios de limpieza, escalabilidad y coherencia.
+Configuración personal de **Hyprland**. Este repositorio automatiza el despliegue de un entorno de trabajo basado en Wayland, siguiendo principios de limpieza, escalabilidad y coherencia.
 
 ---
 
@@ -37,41 +37,15 @@ Este repositorio automatiza la transición a un entorno de escritorio completo:
 
 ## 🔄 Reset de Instalación
 
-Si deseas limpiar el sistema para realizar una instalación desde cero nuevamente, utiliza este comando:
+Si deseas limpiar el sistema para realizar una instalación desde cero nuevamente O En caso de ERRORR, utiliza este comando:
 
 ```bash
 cd ~ && rm -rf ~/Miarch ~/.config/hypr ~/.config/kitty ~/.config/waybar ~/.config/swww ~/.config/neovim ~/.config/zsh ~/.cache/swww ~/.cache/wal /tmp/swww && sudo pacman -Rs --noconfirm rust
 ```
 
------
-
-## 🖼️ Personalización Visual
-
-Para cambiar el fondo de pantalla y actualizar los colores del sistema instantáneamente:
-
-```bash
-bash ~/Miarch/scripts/wallpaper.sh
-```
-
------
 
 ## 📌 Requisitos
 
   * **Sistema:** Arch Linux (Instalación limpia).
   * **Usuario:** Permisos de `sudo` configurados.
   * **Hardware:** Probado en Intel Core i5 8th Gen.
-
------
-
-## 🔥 Filosofía
-
-Desarrollado bajo los valores de **Coherencia, Lealtad y Respeto**. El objetivo es crear una arquitectura de software donde cada archivo de configuración tenga un propósito claro.
-
-**Autor:** [Miguel Alejandro](https://www.google.com/search?q=https://github.com/Alejandro0328)
-
-```
-
-
-
-¡Cópialo, pégalo en tu `README.md` y dale ese `push` a GitHub! ¿Listo para la prueba de fuego en la otra PC?
-```
